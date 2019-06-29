@@ -1,0 +1,104 @@
+LAPACK
+------
+
+Reference:  LAPACK Users Guide, 3rd ed., Society for Industrial and
+Applied Mathematics, Philadelphia, 1999 (for ver 3.0); available on-line at
+http://www.netlib.org/lapack/lug/lapack_lug.html
+
+  LAPACK is a collection of Fortran routines to solve linear equation and
+eigenvalue problems.  It is available from http://www.netlib.org/ (Fortran, C 
+versions).  If you lack web access, send the e-mail message 
+'send index from lapack' (omit quotes) to netlib@ornl.gov.  The netlib web 
+site also has pre-compiled LAPACK libraries optimized for various computers.
+
+  What's different about LAPACK?  To quote the LAPACK literature:
+
+  "The LINPACK and EISPACK codes were written in a fashion that, for 
+  the most part, ignored the cost of data movement.  But today's
+  high-speed computers slow to a crawl if they must run at memory-
+  access speed rather than floating-point speed.  Memory access is
+  the real bottleneck nowadays, unlike the old days when arithmetic
+  computation was the bottleneck.  LAPACK has been restructured
+  to reuse as much data as possible in order to reduce the cost of
+  data movement.  Further improvements include new and improved
+  eigenproblem algorithms, and a design which exploits the parallel
+  processing capabilities of many modern computers (especially
+  shared memory machines)."
+
+   There are four versions of LAPACK, corresponding to different
+number representations (single, double, complex, double complex).
+The single precision routines begin with 'S'; DISORT calls these 
+versions.  They can still be used in double precision, if your f77 compiler
+has an autodoubling option (quite common nowadays) AND you use it 
+to compile our version rather than use a locally-supplied library of 
+LAPACK routines.
+
+   But if you use a local LAPACK library, and want to run DISORT in 
+double precision, you will need to change the first letters of all 
+routines beginning with "SGB" and "SGE" to 'D' (e.g. using the Unix 
+stream editor 'sed':
+
+   sed 's/SGB/DGB/g' DISORTsp.f | sed 's/SGE/DGE/g' > disortdp.f)
+
+Or, you can download the 'D' versions from netlib, compile them
+without the autodoubling option, and link them to DISORTsp.f
+compiled WITH the autodoubling option.
+
+  LINPACK and LAPACK use the same "band storage mode" for banded matrices
+(the LAPACK Users Guide is a little misleading in this respect, but the
+in-code documentation makes this clear); so converting DISORT from 
+LINPACK to LAPACK linear-equation-solving involved changing only the 
+actual subroutine calls.
+
+   After years of paying the extra cost to calculate RCOND (an estimate of
+matrix ill-conditioning) in DISORT, we have never encountered a single case,
+nor received a single complaint, about ill-conditioning in the LINPACK
+solutions.  So in switching to LAPACK we have foregone calculating an
+ill-conditioning measure and used the "standard" driver routines (which still
+check for singularity but just don't furnish a numerical measure of it). 
+"Expert" drivers (ending in X) are available.  Note that ALBTRN bypasses the
+simple drivers because it is more efficient to do the LU-decomposition in
+ALBTRN and the solution in SOLVE1.
+
+
+BLAS
+----
+
+  BLAS is a collection of low-level routines supporting LAPACK.  The BLAS 
+are also available from netlib.  The same remarks as with LAPACK apply to 
+adapting the BLAS for running DISORT in double precision.  In particular, 
+the double precision versions of BLAS routines all begin with a 'D' instead 
+of an 'S'.
+
+  The BLAS-1 routines (vector operations only), which were prominent
+in LINPACK, perform an insignificant part of LAPACK computation and 
+cannot achieve high efficiency on modern computers.  LAPACK loads as 
+much computation as possible onto the BLAS-3 (matrix-matrix operations)
+routines, and failing that, onto the BLAS-2 (matrix-vector operations) 
+routines.  This is because LAPACK tries to use "block-structured
+algorithms" as much as possible, in which the algorithm manipulates
+small submatrices ("blocks") rather than single matrix elements.  (BLAS-3 
+routines are called only if blocked algorithms are used.)  The size 
+of these blocks is calculated in ILAENV, which can be handtuned for 
+best efficiency (according to LAPACK documentation) but in practice 
+this is probably far beyond the abilities of the average user.  We pared
+ILAENV down to handle just the cases required by DISORT, in which cases
+it always returns preferred block sizes of 1, 32, or 64.
+
+  The LAPACK manual says this about the BLAS:
+
+  "One should use BLAS that have been optimized for the machine being
+  used if they are available.  Many manufacturers and research insti-
+  tutions have developed, or are developing, efficient versions of the
+  BLAS for particular machines.  A portable set of Fortran BLAS is
+  supplied with LAPACK and can always be used if no other BLAS are
+  available, or if there is a suspected problem in the local BLAS
+  library, but no attempt has been made to structure the Fortran
+  BLAS for high performance."
+
+While using local BLAS may be less important for linear-equation-solving
+in DISORT, it will be very important for eigenproblem solving if DISORT 
+ever switches from ASYMTX to the LAPACK routine SGEEV, so this issue should 
+be given serious attention by users.  The netlib web site has suggestions for
+obtaining locally-optimized BLAS libraries.
+
