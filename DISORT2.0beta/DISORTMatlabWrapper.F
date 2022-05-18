@@ -38,25 +38,27 @@ C     Arguments for mxCreateNumericArray
 C     Arguments for computational routine:
 C     .. scalar arguments ..
       CHARACTER HEADER*127
-      integer*4 ::  NLYR, NMOM, NTAU, NSTR, NUMU, NPHI, IBCND,
+      integer :: NLYR, NMOM, NTAU, NSTR, NUMU, NPHI, IBCND,
      &          MAXCLY, MAXULV, MAXUMU, MAXPHI, MAXMOM
       logical USRTAU, USRANG, LAMBER, PLANK, ONLYFL
-      real*4  WVNMLO, WVNMHI, FBEAM, UMU0, PHI0, FISOT, ALBEDO, BTEMP, 
+      real  WVNMLO, WVNMHI, FBEAM, UMU0, PHI0, FISOT, ALBEDO, BTEMP,
      &      TTEMP, TEMIS, ACCUR
 
 c     .. array arguments ..
       logical PRNT(5)
-      real*4, dimension(:), allocatable::  DTAUC,SSALB,TEMPER,UTAU,UMU,
+      real, dimension(:), allocatable::  DTAUC,SSALB,TEMPER,UTAU,UMU,
      &          PHI, RFLDIR, RFLDN, FLUP, DFDT, UAVG, ALBMED, TRNMED
-      real*4, dimension(:,:), allocatable:: PMOM
-      real*4, dimension(:,:,:), allocatable:: UU
+      real, dimension(:,:), allocatable:: PMOM
+      real, dimension(:,:,:), allocatable:: UU
 
 c     temproray storage for MATLAB logical items
       integer*1 logicalItem   
 
       character*20000 line
-      integer*4 k
-      integer*4 mexPrintf
+c     for debugging it is nice to have compact prints
+c      character*200 line
+      integer k
+      integer mexPrintf
       integer x
 
 C-----------------------------------------------------------------------
@@ -80,54 +82,54 @@ C     Get the size of the input array.
       size = mrows*ncols
 
 C     Create Fortran array from the input argument.
-      call mxCopyPtrToInteger4(mxGetPr(prhs(1)),NLYR,1)
+      call mxCopyPtrToInteger8(mxGetPr(prhs(1)),NLYR,1)
 c      write(line,*) '1, NLYR = ',NLYR
-c      k=mexPrintf(line//achar(13)) 
+c      k=mexPrintf(line//achar(13))
 
-      call mxCopyPtrToInteger4(mxGetPr(prhs(4)),NMOM,1)
+      call mxCopyPtrToInteger8(mxGetPr(prhs(4)),NMOM,1)
 c      write(line,*) '4, NMOM = ',NMOM
-c      k=mexPrintf(line//achar(13)) 
+c      k=mexPrintf(line//achar(13))
 
-      call mxCopyPtrToInteger4(mxGetPr(prhs(33)),MAXCLY,1)
+      call mxCopyPtrToInteger8(mxGetPr(prhs(33)),MAXCLY,1)
 c      write(line,*) '33, MAXCLY = ',MAXCLY
-c      k=mexPrintf(line//achar(13)) 
+c      k=mexPrintf(line//achar(13))
 
-      call mxCopyPtrToInteger4(mxGetPr(prhs(34)),MAXULV,1)
+      call mxCopyPtrToInteger8(mxGetPr(prhs(34)),MAXULV,1)
 c      write(line,*) '34, MAXULV = ',MAXULV
-c      k=mexPrintf(line//achar(13)) 
+c      k=mexPrintf(line//achar(13))
 
-      call mxCopyPtrToInteger4(mxGetPr(prhs(35)),MAXUMU,1)
+      call mxCopyPtrToInteger8(mxGetPr(prhs(35)),MAXUMU,1)
 c      write(line,*) '35, MAXUMU = ',MAXUMU
-c      k=mexPrintf(line//achar(13)) 
+c      k=mexPrintf(line//achar(13))
 
-      call mxCopyPtrToInteger4(mxGetPr(prhs(36)),MAXPHI,1)
+      call mxCopyPtrToInteger8(mxGetPr(prhs(36)),MAXPHI,1)
 c      write(line,*) '36, MAXPHI = ',MAXPHI
-c      k=mexPrintf(line//achar(13)) 
+c      k=mexPrintf(line//achar(13))
 
-      call mxCopyPtrToInteger4(mxGetPr(prhs(37)),MAXMOM,1)
+      call mxCopyPtrToInteger8(mxGetPr(prhs(37)),MAXMOM,1)
 c      write(line,*) '37, MAXMOM = ',MAXMOM
-c      k=mexPrintf(line//achar(13)) 
+c      k=mexPrintf(line//achar(13))
 
       mrows = mxGetM(prhs(2))
       ncols = mxGetN(prhs(2))
       size = mrows*ncols
 
       allocate(DTAUC(NLYR))      
-      call mxCopyPtrToReal4(mxGetPr(prhs(2)),DTAUC,size)
+      call mxCopyPtrToReal8(mxGetPr(prhs(2)),DTAUC,size)
 c      write(line,*) '2, DTAUC = ',DTAUC
-c      k=mexPrintf(line//achar(13)) 
+c      k=mexPrintf(line//achar(13))
 
       allocate(SSALB(NLYR))      
-      call mxCopyPtrToReal4(mxGetPr(prhs(3)),SSALB,size)
-c     write(line,*) '3, SSALB = ',SSALB
-c     k=mexPrintf(line//achar(13)) 
+      call mxCopyPtrToReal8(mxGetPr(prhs(3)),SSALB,size)
+c      write(line,*) '3, SSALB = ',SSALB
+c      k=mexPrintf(line//achar(13))
 
       mrows = mxGetM(prhs(6))
       ncols = mxGetN(prhs(6))
       size = mrows*ncols
 
       allocate(TEMPER(0:NLYR))      
-      call mxCopyPtrToReal4(mxGetPr(prhs(6)),TEMPER,size)
+      call mxCopyPtrToReal8(mxGetPr(prhs(6)),TEMPER,size)
 c      write(line,*) '6, TEMPER = ',TEMPER
 c      k=mexPrintf(line//achar(13)) 
 
@@ -136,15 +138,15 @@ c      k=mexPrintf(line//achar(13))
       size = mrows*ncols
       
       allocate(PMOM(0:NMOM, NLYR))      
-      call mxCopyPtrToReal4(mxGetPr(prhs(5)),PMOM,size)
+      call mxCopyPtrToReal8(mxGetPr(prhs(5)),PMOM,size)
 c      write(line,*) '5, PMOM = ',PMOM
 c      k=mexPrintf(line//achar(13))
       
-      call mxCopyPtrToReal4(mxGetPr(prhs(7)),WVNMLO,1)
+      call mxCopyPtrToReal8(mxGetPr(prhs(7)),WVNMLO,1)
 c      write(line,*) '7, WVNMLO = ',WVNMLO
 c      k=mexPrintf(line//achar(13))
 
-      call mxCopyPtrToReal4(mxGetPr(prhs(8)),WVNMHI,1)
+      call mxCopyPtrToReal8(mxGetPr(prhs(8)),WVNMHI,1)
 c      write(line,*) '8, WVNMHI = ',WVNMHI
 c      k=mexPrintf(line//achar(13)) 
 
@@ -155,9 +157,9 @@ c      k=mexPrintf(line//achar(13))
 
 c     NTAU could be input/output variable
       if (USRTAU) then
-          call mxCopyPtrToInteger4(mxGetPr(prhs(10)),NTAU,1)
-          write(line,*) '10, NTAU = ',NTAU
-          k=mexPrintf(line//achar(13)) 
+          call mxCopyPtrToInteger8(mxGetPr(prhs(10)),NTAU,1)
+c          write(line,*) '10, NTAU = ',NTAU
+c          k=mexPrintf(line//achar(13))
 
           mrows = mxGetM(prhs(11))
           ncols = mxGetN(prhs(11))
@@ -165,7 +167,7 @@ c     NTAU could be input/output variable
 
 c         UTAU could be input/output variable
           allocate(UTAU(NTAU))    
-          call mxCopyPtrToReal4(mxGetPr(prhs(11)),UTAU,size)
+          call mxCopyPtrToReal8(mxGetPr(prhs(11)),UTAU,size)
 c          write(line,*) '11, UTAU = ',UTAU
 c          k=mexPrintf(line//achar(13))    
       else    
@@ -174,7 +176,7 @@ c     both NTAU and UTAU are output variables
           allocate(UTAU(NTAU))
       end if
 
-      call mxCopyPtrToInteger4(mxGetPr(prhs(12)),NSTR,1)
+      call mxCopyPtrToInteger8(mxGetPr(prhs(12)),NSTR,1)
 c      write(line,*) '12, NSTR = ',NSTR
 c      k=mexPrintf(line//achar(13)) 
 
@@ -185,25 +187,25 @@ c      k=mexPrintf(line//achar(13))
     
 c     NUMU and UMU could be input/output variable
       if ( USRANG) then
-          call mxCopyPtrToInteger4(mxGetPr(prhs(14)),NUMU,1)
+          call mxCopyPtrToInteger8(mxGetPr(prhs(14)),NUMU,1)
 c          write(line,*) '14, NUMU = ',NUMU
-c          k=mexPrintf(line//achar(13)) 
+c          k=mexPrintf(line//achar(13))
 
           mrows = mxGetM(prhs(15))
           ncols = mxGetN(prhs(15))
           size = mrows*ncols
 
           allocate(UMU(NUMU))    
-          call mxCopyPtrToReal4(mxGetPr(prhs(15)),UMU,size)
+          call mxCopyPtrToReal8(mxGetPr(prhs(15)),UMU,size)
 c          write(line,*) '15, UMU = ',UMU
-c          k=mexPrintf(line//achar(13))   
+c          k=mexPrintf(line//achar(13))
       else
 c     both NUMU and UMU are output variables
           NUMU = MAXUMU
           allocate(UMU(NUMU))  
       endif  
 
-      call mxCopyPtrToInteger4(mxGetPr(prhs(16)),NPHI,1)
+      call mxCopyPtrToInteger8(mxGetPr(prhs(16)),NPHI,1)
 c      write(line,*) '16, NPHI = ',NPHI
 c      k=mexPrintf(line//achar(13))
 
@@ -212,27 +214,27 @@ c      k=mexPrintf(line//achar(13))
       size = mrows*ncols
 
       allocate(PHI(NPHI))      
-      call mxCopyPtrToReal4(mxGetPr(prhs(17)),PHI,size)
+      call mxCopyPtrToReal8(mxGetPr(prhs(17)),PHI,size)
 c      write(line,*) '17, PHI = ',PHI
 c      k=mexPrintf(line//achar(13))
 
-      call mxCopyPtrToInteger4(mxGetPr(prhs(18)),IBCND,1)
+      call mxCopyPtrToInteger8(mxGetPr(prhs(18)),IBCND,1)
 c      write(line,*) '18, IBCND = ',IBCND
 c      k=mexPrintf(line//achar(13))
 
-      call mxCopyPtrToReal4(mxGetPr(prhs(19)),FBEAM,1)
+      call mxCopyPtrToReal8(mxGetPr(prhs(19)),FBEAM,1)
 c      write(line,*) '19, FBEAM = ',FBEAM
 c      k=mexPrintf(line//achar(13))
 
-      call mxCopyPtrToReal4(mxGetPr(prhs(20)),UMU0,1)
+      call mxCopyPtrToReal8(mxGetPr(prhs(20)),UMU0,1)
 c      write(line,*) '20, UMU0 = ',UMU0
 c      k=mexPrintf(line//achar(13))
 
-      call mxCopyPtrToReal4(mxGetPr(prhs(21)),PHI0,1)
+      call mxCopyPtrToReal8(mxGetPr(prhs(21)),PHI0,1)
 c      write(line,*) '21, PHI0 = ',PHI0
 c      k=mexPrintf(line//achar(13))
 
-      call mxCopyPtrToReal4(mxGetPr(prhs(22)),FISOT,1)
+      call mxCopyPtrToReal8(mxGetPr(prhs(22)),FISOT,1)
 c      write(line,*) '22, FISOT = ',FISOT
 c      k=mexPrintf(line//achar(13))
 
@@ -241,19 +243,19 @@ c      k=mexPrintf(line//achar(13))
 c      write(line,*) '23, LAMBER = ',LAMBER
 c      k=mexPrintf(line//achar(13))
 
-      call mxCopyPtrToReal4(mxGetPr(prhs(24)),ALBEDO,1)
+      call mxCopyPtrToReal8(mxGetPr(prhs(24)),ALBEDO,1)
 c      write(line,*) '24, ALBEDO = ',ALBEDO
 c      k=mexPrintf(line//achar(13))
 
-      call mxCopyPtrToReal4(mxGetPr(prhs(25)),BTEMP,1)
+      call mxCopyPtrToReal8(mxGetPr(prhs(25)),BTEMP,1)
 c      write(line,*) '25, BTEMP = ',BTEMP
 c      k=mexPrintf(line//achar(13))
 
-      call mxCopyPtrToReal4(mxGetPr(prhs(26)),TTEMP,1)
+      call mxCopyPtrToReal8(mxGetPr(prhs(26)),TTEMP,1)
 c      write(line,*) '26, TTEMP = ',TTEMP
 c      k=mexPrintf(line//achar(13))
 
-      call mxCopyPtrToReal4(mxGetPr(prhs(27)),TEMIS,1)
+      call mxCopyPtrToReal8(mxGetPr(prhs(27)),TEMIS,1)
 c      write(line,*) '27, TEMIS = ',TEMIS
 c      k=mexPrintf(line//achar(13))
 
@@ -267,13 +269,13 @@ c      k=mexPrintf(line//achar(13))
 c      write(line,*) '29, ONLYFL = ',ONLYFL
 c      k=mexPrintf(line//achar(13))
 
-      call mxCopyPtrToReal4(mxGetPr(prhs(30)),ACCUR,1)
+      call mxCopyPtrToReal8(mxGetPr(prhs(30)),ACCUR,1)
 c      write(line,*) '30, ACCUR = ',ACCUR
 c      k=mexPrintf(line//achar(13))
 
       HEADER = 'dummy header'
 c      call mxCopyPtrToCharacter(mxGetPr(prhs(32)),HEADER,127)
-C     //TODO: header is not read properly but I don't think I need it      
+C     //TODO: header is not read properly but I don't need it
 c      k=mexPrintf(HEADER//achar(13)) 
 
 c     allocate output variables
@@ -294,7 +296,7 @@ c     TODO:// fix the boolean values, hardcode boolean values just yet
       PRNT(5) = .false.
 
 C     Call the computational subroutine.
-c      k=mexPrintf("before DISORT"//achar(13)) 
+c      k=mexPrintf("in Wrapper: before DISORT"//achar(13))
 c      return
       call DISORT( NLYR, DTAUC, SSALB, NMOM, PMOM, TEMPER, WVNMLO,
      &  WVNMHI, USRTAU, NTAU, UTAU, NSTR, USRANG, NUMU, UMU, NPHI,
@@ -303,30 +305,30 @@ c      return
      &  MAXCLY, MAXULV, MAXUMU, MAXPHI, MAXMOM, RFLDIR, RFLDN,
      &  FLUP, DFDT, UAVG, UU, ALBMED, TRNMED)
 
-c      k=mexPrintf("after disort")
+c      k=mexPrintf("in Wrapper: after disort"//achar(13))
 C     Prepare MATLAB output variables
 C     Create matrix for the return argument.
       size = NTAU*1
-      classid = mxClassIDFromClassName('single')
+      classid = mxClassIDFromClassName('double')
       complexflag = 0
       ndim = 2
       dims(1) = NTAU
       dims(2) = 1
 
       plhs(1) = mxCreateNumericArray(ndim,dims, classid, complexflag)
-      call mxCopyReal4ToPtr(RFLDIR,mxGetPr(plhs(1)),size)    
+      call mxCopyReal8ToPtr(RFLDIR,mxGetPr(plhs(1)),size)
 
       plhs(2) = mxCreateNumericArray(ndim,dims, classid, complexflag)
-      call mxCopyReal4ToPtr(RFLDN,mxGetPr(plhs(2)),size)    
+      call mxCopyReal8ToPtr(RFLDN,mxGetPr(plhs(2)),size)
 
       plhs(3) = mxCreateNumericArray(ndim,dims, classid, complexflag)
-      call mxCopyReal4ToPtr(FLUP,mxGetPr(plhs(3)),size)    
+      call mxCopyReal8ToPtr(FLUP,mxGetPr(plhs(3)),size)
 
       plhs(4) = mxCreateNumericArray(ndim,dims, classid, complexflag)
-      call mxCopyReal4ToPtr(DFDT,mxGetPr(plhs(4)),size)    
+      call mxCopyReal8ToPtr(DFDT,mxGetPr(plhs(4)),size)
 
       plhs(5) = mxCreateNumericArray(ndim,dims, classid, complexflag)
-      call mxCopyReal4ToPtr(UAVG,mxGetPr(plhs(5)),size)    
+      call mxCopyReal8ToPtr(UAVG,mxGetPr(plhs(5)),size)
 
       size = MAXUMU*MAXULV*MAXPHI
       ndim = 3
@@ -335,7 +337,7 @@ C     Create matrix for the return argument.
       dims(3) = MAXPHI
 
       plhs(6) = mxCreateNumericArray(ndim,dims, classid, complexflag)
-      call mxCopyReal4ToPtr(UU,mxGetPr(plhs(6)),size)   
+      call mxCopyReal8ToPtr(UU,mxGetPr(plhs(6)),size)
 
       size = NUMU*1
       ndim = 2
@@ -343,26 +345,26 @@ C     Create matrix for the return argument.
       dims(2) = 1
 
       plhs(7) = mxCreateNumericArray(ndim,dims, classid, complexflag)
-      call mxCopyReal4ToPtr(ALBMED,mxGetPr(plhs(7)),size)   
+      call mxCopyReal8ToPtr(ALBMED,mxGetPr(plhs(7)),size)
 
       plhs(8) = mxCreateNumericArray(ndim,dims, classid, complexflag)
-      call mxCopyReal4ToPtr(TRNMED,mxGetPr(plhs(8)),size)   
+      call mxCopyReal8ToPtr(TRNMED,mxGetPr(plhs(8)),size)
 
 c     independent of USRANG always return UMU
-c     it will the copy of the provided UMU or from the DISORT        
+c     it will the copy of the provided UMU or from the DISORT
       plhs(9) = mxCreateNumericArray(ndim,dims, classid,
      &                                       complexflag)
-      call mxCopyReal4ToPtr(UMU,mxGetPr(plhs(9)),size)   
+      call mxCopyReal8ToPtr(UMU,mxGetPr(plhs(9)),size)
 
 c     independent of USRTAU always return UTAU
 c     it will the copy of the provided UTAU or from the DISORT
       size = NTAU*1
       ndim = 2
       dims(1) = NTAU
-      dims(2) = 1      
+      dims(2) = 1
       plhs(10) = mxCreateNumericArray(ndim,dims, classid,
      &                                       complexflag)
-      call mxCopyReal4ToPtr(UTAU,mxGetPr(plhs(10)),size)   
+      call mxCopyReal8ToPtr(UTAU,mxGetPr(plhs(10)),size)
  
       return
       end

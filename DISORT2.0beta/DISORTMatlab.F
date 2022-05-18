@@ -244,7 +244,7 @@ c     UMU is output variable
       HEADER = 'fortran header'
 c      call mxCopyPtrToCharacter(mxGetPr(prhs(32)),HEADER,127)
 C     //TODO: header is not read properly but I don't think I need it      
-      k=mexPrintf(HEADER//achar(13)) 
+      k=mexPrintf(HEADER//achar(13))
 
 c     allocate output variables
       allocate(RFLDIR(NTAU))      
@@ -270,7 +270,7 @@ c     TODO:// fix the boolean values, hardcode boolean values just yet
       PRNT(5) = .false.
 
 C     Call the computational subroutine.
-      k=mexPrintf("before DISORT"//achar(13)) 
+      k=mexPrintf("before DISORT"//achar(13))
 
       call DISORT( NLYR, DTAUC, SSALB, NMOM, PMOM, TEMPER, WVNMLO,
      &  WVNMHI, USRTAU, NTAU, UTAU, NSTR, USRANG, NUMU, UMU, NPHI,

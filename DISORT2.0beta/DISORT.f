@@ -473,7 +473,6 @@ c                            ** Be sure SLFTST sets all print flags off.
       IF( .NOT.PASS1 .AND. LEN( HEADER ).NE.0 )
      &    WRITE( *,'(//,1X,100(''*''),/,A,/,1X,100(''*''))' )
      &    ' DISORT: '//HEADER
-
 c                                  ** Calculate cumulative optical depth
 c                                  ** and dither single-scatter albedo
 c                                  ** to improve numerical behavior of
@@ -481,13 +480,11 @@ c                                  ** eigenvalue/vector computation
       CALL ZEROIT( TAUC, MXCLY + 1 )
 
       DO 30 LC = 1, NLYR
-
          IF( SSALB( LC ).EQ.1.0 ) SSALB( LC ) = 1.0 - DITHER
          TAUC( LC ) = TAUC( LC - 1 ) + DTAUC( LC )
 
    30 CONTINUE
 c                                ** Check input dimensions and variables
-
       CALL CHEKIN( NLYR, DTAUC, SSALB, NMOM, PMOM, TEMPER, WVNMLO,
      &             WVNMHI, USRTAU, NTAU, UTAU, NSTR, USRANG,
      &             NUMU, UMU, NPHI, PHI, IBCND, FBEAM, UMU0,
