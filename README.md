@@ -4,6 +4,7 @@ The most important thing is to compile the Fortran code using mex corectly. The 
 # Possible crash issues
 1. Wrong data types (explained above)
 2. Wrong BDREF file (there are two)
+3. Finally, you might end up compiling mex file in the wrong dirrectory (current vs root) and it will ambiguous which mex file you are using
 
 Here is the test case for debugging (ported DISOTEST.f), which shows how to use mex and call MATLABDisortWrapper [/work/mm0062/b302074/workspace/matlab/MATLAB-Climate-Modeling/Projects/DISORT/portedUnitTestsDisortBeta2_0.m](https://github.com/SeregaOsipov/MATLAB-Climate-Modeling/blob/master/Projects/DISORT/portedUnitTestsDisortBeta2_0.m)
 
