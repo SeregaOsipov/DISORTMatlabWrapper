@@ -1,8 +1,10 @@
 # How to call DISORT as a subroutine from Matlab
-Matlab help on MEX https://de.mathworks.com/help/matlab/call-mex-functions.html
+The most important thing is to compile the Fortran code using mex corectly. The Fortran-Matlab wrapper will pass 8-byte integer and reals. Make sure that mex compiles with the -fdefault-real-8 and -fdefault-integer-8 flags. My version of Matlab supplies -fdefault-integer-8 by default and I add -fdefault-real-8 manually.
 
-Compile the wrapper and ALL other F files using MEX functions https://github.com/SeregaOsipov/DISORTMatlabWrapper/blob/master/DISORT2.0beta/DISORTMatlabWrapper.F  
-go to the root dir and execute:  
+# Possible crash issues
+1. Wrong data types (explained above)
+2. Wrong BDREF file (there are two)
 
-mex /work/mm0062/b302074/workspace/fortran/DISORTMatlabWrapper/DISORT2.0beta/DISORTMatlabWrapper.F /work/mm0062/b302074/workspace/fortran/DISORTMatlabWrapper/DISORT2.0beta/DISORT.f /work/mm0062/b302074/workspace/fortran/DISORTMatlabWrapper/DISORT2.0beta/RDI1MACH.f /work/mm0062/b302074/workspace/fortran/DISORTMatlabWrapper/DISORT2.0beta/BDREFCopyFromTest.f /work/mm0062/b302074/workspace/fortran/DISORTMatlabWrapper/DISORT2.0beta/ErrPackMexCompatible.f /work/mm0062/b302074/workspace/fortran/DISORTMatlabWrapper/DISORT2.0beta/LINPAK.f
+Here is the test case for debugging (ported DISOTEST.f), which shows how to use mex and call MATLABDisortWrapper [/work/mm0062/b302074/workspace/matlab/MATLAB-Climate-Modeling/Projects/DISORT/portedUnitTestsDisortBeta2_0.m](https://github.com/SeregaOsipov/MATLAB-Climate-Modeling/blob/master/Projects/DISORT/portedUnitTestsDisortBeta2_0.m)
 
+If you run into problems, familirize yourself with the Matlab docs on MEX https://de.mathworks.com/help/matlab/call-mex-functions.html
