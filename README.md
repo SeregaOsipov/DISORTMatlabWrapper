@@ -6,6 +6,6 @@ The most important thing is to compile the Fortran code using mex corectly. The 
 2. Wrong BDREF file (there are two)
 3. Finally, you might end up compiling mex file in the wrong dirrectory (current vs root) and it will ambiguous which mex file you are using
 
-Here is the test case for debugging (ported DISOTEST.f), which shows how to use mex and call MATLABDisortWrapper [/work/mm0062/b302074/workspace/matlab/MATLAB-Climate-Modeling/Projects/DISORT/portedUnitTestsDisortBeta2_0.m](https://github.com/SeregaOsipov/MATLAB-Climate-Modeling/blob/master/Projects/DISORT/portedUnitTestsDisortBeta2_0.m)
+Here is the test case for debugging (ported DISOTEST.f), which shows how to use mex and call MATLABDisortWrapper https://github.com/SeregaOsipov/DISORTMatlabWrapper/blob/master/portedUnitTestsDisortBeta2_0.m
 
 If you run into problems, familirize yourself with the Matlab docs on MEX https://de.mathworks.com/help/matlab/call-mex-functions.html
