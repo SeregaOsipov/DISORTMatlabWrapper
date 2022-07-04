@@ -13,3 +13,6 @@ The most important thing is to compile the Fortran code using mex corectly. The 
 The test case (for debugging; ported DISOTEST.f) shows how to use mex and call MATLABDisortWrapper https://github.com/SeregaOsipov/DISORTMatlabWrapper/blob/master/portedUnitTestsDisortBeta2_0.m
 
 If you run into problems, familirize yourself with the Matlab docs on MEX https://de.mathworks.com/help/matlab/call-mex-functions.html
+
+If you want coupling with the legacy DISORTv2.0beta, then a have a look at v2.0beta tag https://github.com/SeregaOsipov/DISORTMatlabWrapper/releases/tag/v2.0beta
+Since that tag, code switched to disort4.0.99.
