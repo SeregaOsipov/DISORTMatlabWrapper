@@ -54,9 +54,8 @@ c     .. array arguments ..
 c     temproray storage for MATLAB logical items
       integer*1 logicalItem   
 
-      character*20000 line
 c     for debugging it is nice to have compact prints
-c      character*200 line
+      character*20000 line
       integer k
       integer mexPrintf
       integer x

@@ -1,0 +1,55 @@
+disotest.f90:2666:10:
+
+ 2666 | WRITE(*,*), ""
+      |          1
+Warning: Legacy Extension: Comma before i/o item list at (1)
+disotest.f90:2667:10:
+
+ 2667 | WRITE(*,*), ""
+      |          1
+Warning: Legacy Extension: Comma before i/o item list at (1)
+disotest.f90:2668:10:
+
+ 2668 | WRITE(*,*), "------------------------------------------"
+      |          1
+Warning: Legacy Extension: Comma before i/o item list at (1)
+disotest.f90:2669:10:
+
+ 2669 | WRITE(*,*), "OVERVIEW OF DISORT UNIT TEST SUITE"
+      |          1
+Warning: Legacy Extension: Comma before i/o item list at (1)
+disotest.f90:2670:10:
+
+ 2670 | WRITE(*,*), ""
+      |          1
+Warning: Legacy Extension: Comma before i/o item list at (1)
+disotest.f90:2671:24:
+
+ 2671 | WRITE(*,'(A30,F7.2,A1)'), "Percent of unit tests passed: ",  &
+      |                        1
+Warning: Legacy Extension: Comma before i/o item list at (1)
+disotest.f90:2673:19:
+
+ 2673 | WRITE(*,'(A30,I4)'), "Number of unit tests:         ", NTEST
+      |                   1
+Warning: Legacy Extension: Comma before i/o item list at (1)
+disotest.f90:2674:19:
+
+ 2674 | WRITE(*,'(A30,I4)'), "Number of unit tests passed:  ", NPASS
+      |                   1
+Warning: Legacy Extension: Comma before i/o item list at (1)
+disotest.f90:2675:19:
+
+ 2675 | WRITE(*,'(A30,I4)'), "Number of unit tests failed:  ", NTEST-NPASS
+      |                   1
+Warning: Legacy Extension: Comma before i/o item list at (1)
+disotest.f90:2676:10:
+
+ 2676 | WRITE(*,*), "------------------------------------------"
+      |          1
+Warning: Legacy Extension: Comma before i/o item list at (1)
+disotest.f90:2677:10:
+
+ 2677 | WRITE(*,*), ""
+      |          1
+Warning: Legacy Extension: Comma before i/o item list at (1)
